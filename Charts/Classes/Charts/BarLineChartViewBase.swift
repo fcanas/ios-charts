@@ -527,7 +527,9 @@ public class BarLineChartViewBase: ChartViewBase, UIGestureRecognizerDelegate
     private var _lastPanPoint = CGPoint() /// This is to prevent using setTranslation which resets velocity
     
     private var _decelerationLastTime: NSTimeInterval = 0.0
+    #if os(iOS)
     private var _decelerationDisplayLink: CADisplayLink!
+    #endif
     private var _decelerationVelocity = CGPoint()
     
     @objc private func tapGestureRecognized(recognizer: UITapGestureRecognizer)
@@ -740,8 +742,10 @@ public class BarLineChartViewBase: ChartViewBase, UIGestureRecognizerDelegate
                     _decelerationLastTime = CACurrentMediaTime()
                     _decelerationVelocity = recognizer.velocityInView(self)
                     
+                    #if os(iOS)
                     _decelerationDisplayLink = CADisplayLink(target: self, selector: Selector("decelerationLoop"))
                     _decelerationDisplayLink.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+                    #endif
                 }
                 
                 _isDragging = false
@@ -788,11 +792,13 @@ public class BarLineChartViewBase: ChartViewBase, UIGestureRecognizerDelegate
     
     public func stopDeceleration()
     {
+        #if os(iOS)
         if (_decelerationDisplayLink !== nil)
         {
             _decelerationDisplayLink.removeFromRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
             _decelerationDisplayLink = nil
         }
+        #endif
     }
     
     @objc private func decelerationLoop()

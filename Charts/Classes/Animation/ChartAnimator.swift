@@ -41,8 +41,9 @@ public class ChartAnimator: NSObject
     public var phaseY: CGFloat = 1.0
     
     private var _startTime: NSTimeInterval = 0.0
+    #if os(iOS)
     private var _displayLink: CADisplayLink!
-    
+    #endif
     private var _xDuration: NSTimeInterval = 0.0
     private var _yDuration: NSTimeInterval = 0.0
     

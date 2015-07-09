@@ -460,7 +460,9 @@ public class PieRadarChartViewBase: ChartViewBase
     private var _velocitySamples = [AngularVelocitySample]()
     
     private var _decelerationLastTime: NSTimeInterval = 0.0
+    #if os(iOS)
     private var _decelerationDisplayLink: CADisplayLink!
+    #endif
     private var _decelerationAngularVelocity: CGFloat = 0.0
     
     public override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent)
@@ -549,8 +551,10 @@ public class PieRadarChartViewBase: ChartViewBase
                 if (_decelerationAngularVelocity != 0.0)
                 {
                     _decelerationLastTime = CACurrentMediaTime()
+                    #if os(iOS)
                     _decelerationDisplayLink = CADisplayLink(target: self, selector: Selector("decelerationLoop"))
                     _decelerationDisplayLink.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+                    #endif
                 }
             }
         }
@@ -673,11 +677,13 @@ public class PieRadarChartViewBase: ChartViewBase
     
     public func stopDeceleration()
     {
+        #if os(iOS)
         if (_decelerationDisplayLink !== nil)
         {
             _decelerationDisplayLink.removeFromRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
             _decelerationDisplayLink = nil
         }
+        #endif
     }
     
     @objc private func decelerationLoop()
@@ -818,8 +824,10 @@ public class PieRadarChartViewBase: ChartViewBase
                 if (_decelerationAngularVelocity != 0.0)
                 {
                     _decelerationLastTime = CACurrentMediaTime()
+                    #if os(iOS)
                     _decelerationDisplayLink = CADisplayLink(target: self, selector: Selector("decelerationLoop"))
                     _decelerationDisplayLink.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+                    #endif
                 }
             }
         }
