@@ -13,7 +13,11 @@
 
 import Foundation
 import CoreGraphics
+#if os(iOS)
 import UIKit
+#else
+import AppKit
+#endif
 
 /// Base class of PieChartView and RadarChartView.
 public class PieRadarChartViewBase: ChartViewBase

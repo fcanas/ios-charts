@@ -13,7 +13,11 @@
 //
 
 import Foundation
-import UIKit
+#if os(iOS)
+    import UIKit
+    #else
+    import AppKit
+#endif
 import Darwin
 
 internal class ChartUtils

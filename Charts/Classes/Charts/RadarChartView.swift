@@ -13,7 +13,11 @@
 
 import Foundation
 import CoreGraphics
-import UIKit
+#if os(iOS)
+    import UIKit
+    #else
+    import AppKit
+#endif
 
 /// Implementation of the RadarChart, a "spidernet"-like chart. It works best
 /// when displaying 5-10 entries per DataSet.

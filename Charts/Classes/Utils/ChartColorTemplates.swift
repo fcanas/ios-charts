@@ -13,7 +13,11 @@
 //
 
 import Foundation
-import UIKit
+#if os(iOS)
+    import UIKit
+    #else
+    import AppKit
+#endif
 
 public class ChartColorTemplates: NSObject
 {

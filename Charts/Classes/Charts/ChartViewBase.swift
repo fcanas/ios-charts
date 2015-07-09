@@ -14,7 +14,11 @@
 //  Based on https://github.com/PhilJay/MPAndroidChart/commit/c42b880
 
 import Foundation
+#if os(iOS)
 import UIKit
+#else
+import AppKit
+#endif
 
 @objc
 public protocol ChartViewDelegate
